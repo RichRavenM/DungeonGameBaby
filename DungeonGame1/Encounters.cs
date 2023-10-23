@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DungeonGame1
 {
-    internal class Encounters
+    public class Encounters
     {
         static Random rand = new Random();
 
@@ -62,8 +62,8 @@ namespace DungeonGame1
             if (random)
             {
                 n = GetName();
-                p = rand.Next(1, 5);
-                h = rand.Next(1, 8);
+                p = Program.currentPlayer.GetPower();
+                h = Program.currentPlayer.GetHealth();
             }
             else
             {
@@ -132,7 +132,7 @@ namespace DungeonGame1
                     {
                         Console.WriteLine($"You use your ninja prowess to evade the {n}, and you successfully escape.");
                         Console.ReadKey();
-                        // got to store
+                        Shop.LoadShop(Program.currentPlayer);
                     }
                 }
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
@@ -154,6 +154,7 @@ namespace DungeonGame1
                         int potionValue = 5;
                         Console.WriteLine($"You gain {potionValue} health.");
                         Program.currentPlayer.health += potionValue;
+                        Program.currentPlayer.potion--;
                         Console.WriteLine($"As you were healing, the {n} advanced and struck!");
                         int damage = (p / 2) - Program.currentPlayer.armourValue;
                         if (damage < 0)
@@ -173,7 +174,7 @@ namespace DungeonGame1
                 }
                 Console.ReadKey();
             }
-            int c = rand.Next(10, 50);
+            int c = Program.currentPlayer.GetCoins();
             Console.WriteLine($"As you stand over the body of the {n}, its body dissolves into {c} gold coins!");
             Program.currentPlayer.coins += c;
             Console.ReadKey();
@@ -181,19 +182,11 @@ namespace DungeonGame1
 
         public static string GetName()
         {
-            switch (rand.Next(0, 4))
-            {
-                case 0:
-                    return "Pirate";
-                case 1:
-                    return "Saibaman";
-                case 2:
-                    return "Zealot";
-                case 3:
-                    return "Temperamental Elf";
-                default:
-                    return "Human Rogue";
-            }
+            int rando = rand.Next(0, 5);
+
+            string[] foes = new string[] { "Pirate", "Saibaman", "Zealot", "Temperamental Elf", "Human Rogue" };
+            
+            return foes[rando];
         }
     }
 }

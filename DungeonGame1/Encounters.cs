@@ -22,8 +22,36 @@ namespace DungeonGame1
 
         }
 
+        public static void BasicFightEncounter()
+        {
+            Console.Clear();
+            Console.WriteLine("You turn the corner and there you see a foe...");
+            Console.ReadKey();
+            Combat(true, "", 0, 0);
+        }
+
+        public static void WizardEncounter()
+        {
+            Console.Clear();
+            Console.WriteLine("Suddenly, you see a long man with a pearlescent white beard, citing his incantations.");
+            Combat(false, "Evil Jeff", 4, 2);
+        }
 
         //Encounter tools
+
+        public static void RandomEncounter()
+        {
+            switch (rand.Next(0, 2))
+            {
+                case 0:
+                    BasicFightEncounter();
+                    break;
+                case 1:
+                    WizardEncounter();
+                    break;
+            }
+        }
+
 
         public static void Combat(bool random, string name, int power, int health)
         {
@@ -33,7 +61,9 @@ namespace DungeonGame1
 
             if (random)
             {
-
+                n = GetName();
+                p = rand.Next(1, 5);
+                h = rand.Next(1, 8);
             }
             else
             {
@@ -56,7 +86,7 @@ namespace DungeonGame1
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
                     //Attack
-                    Console.WriteLine($"You surge towards your attacker, ready to strike! As you pass, the {n} strikes you!");
+                    Console.WriteLine($"You surge towards your attacker, ready to strike! As you lunge, the {n} strikes you!");
                     int damage = p - Program.currentPlayer.armourValue;
                     if (damage < 0)
                     {
@@ -134,7 +164,35 @@ namespace DungeonGame1
                     }
                     Console.ReadKey();
                 }
+                if (Program.currentPlayer.health <= 0)
+                {
+                    //Death code
+                    Console.WriteLine($"As the {n} stands over you, he utters these words: \"Get good, scrub!\". You have been defeated by the mighty {n}");
+                    Console.ReadKey();
+                    System.Environment.Exit(0);
+                }
                 Console.ReadKey();
+            }
+            int c = rand.Next(10, 50);
+            Console.WriteLine($"As you stand over the body of the {n}, its body dissolves into {c} gold coins!");
+            Program.currentPlayer.coins += c;
+            Console.ReadKey();
+        }
+
+        public static string GetName()
+        {
+            switch (rand.Next(0, 4))
+            {
+                case 0:
+                    return "Pirate";
+                case 1:
+                    return "Saibaman";
+                case 2:
+                    return "Zealot";
+                case 3:
+                    return "Temperamental Elf";
+                default:
+                    return "Human Rogue";
             }
         }
     }

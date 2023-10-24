@@ -233,5 +233,18 @@ namespace DungeonGame1
             }
             Console.WriteLine();
         }
+        
+        public static void PrintForLevelUp(string text, int speed = 40)
+        {
+            SoundPlayer soundplayer = new SoundPlayer($"sounds{Path.DirectorySeparatorChar}level-up.wav");
+            soundplayer.PlayLooping();
+            foreach (char c in text)
+            {
+                Console.Write(c);
+                Thread.Sleep(speed);
+            }
+            soundplayer.Stop();
+            Console.WriteLine();
+        }
     }
 }

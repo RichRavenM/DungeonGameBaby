@@ -184,9 +184,16 @@ namespace DungeonGame1
                 Console.ReadKey();
             }
             int c = Program.currentPlayer.GetCoins();
+            int x = Program.currentPlayer.GetXp();
             soundplayer.Stop();
-            Program.Print($"As you stand over the body of the {n}, its body dissolves into {c} gold coins!");
+            Program.Print($"As you stand over the body of the {n}, its body dissolves into {c} gold coins!\nYou have gained {x} XP!");
             Program.currentPlayer.coins += c;
+            Program.currentPlayer.xp += x;
+            if (Program.currentPlayer.CanLevelUp())
+            {
+                Program.currentPlayer.LevelUp();
+            }
+
             Console.ReadKey();
         }
 

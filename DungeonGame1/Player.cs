@@ -13,6 +13,8 @@ namespace DungeonGame1
         public string name;
         public int id;
         public int coins = 0;
+        public int level = 1;
+        public int xp = 1;
         public int health = 10;
         public int damage = 1;
         public int armourValue = 0;
@@ -21,7 +23,7 @@ namespace DungeonGame1
 
         public int mods = 0;
 
-        public enum PlayerClass {Ninja, Berserker, Druid};
+        public enum PlayerClass { Ninja, Berserker, Druid };
         public PlayerClass currentClass = PlayerClass.Berserker;
 
         public int GetHealth()
@@ -41,9 +43,49 @@ namespace DungeonGame1
         public int GetCoins()
         {
             int upper = (15 * mods + 50);
-            int lower = (10* mods + 10);
+            int lower = (10 * mods + 10);
             return Program.rand.Next(lower, upper);
         }
 
+        public int GetXp()
+        {
+            int upper = (20 * mods + 50);
+            int lower = (15 * mods + 10);
+            return Program.rand.Next(lower, upper);
+        }
+
+        public int GetLevelUpValue()
+        {
+            double total = 0;
+
+            for (int i = 1; i < level; i++)
+            {
+                total += floor(i + 300 * pow(2, i / 7.0));
+            }
+
+            return floor(total / 4);
+        }
+
+        public bool CanLevelUp()
+        {
+            if (xp >= GetLevelUpValue())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void LevelUp()
+        {
+            while(CanLevelUp())
+            {
+                level++; 
+            }
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Program.PrintForLevelUp($"Congrats, you are now level {level}!");
+            Console.ResetColor();
+        }
     }
-}

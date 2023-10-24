@@ -125,6 +125,7 @@ namespace DungeonGame1
                         {
                             damage = 0;
                         }
+                        Program.currentPlayer.health -= damage;
                         Console.WriteLine($"You lose {damage} health and are unable to escape.");
                         Console.ReadKey();
                     }
@@ -146,6 +147,7 @@ namespace DungeonGame1
                         {
                             damage = 0;
                         }
+                        Program.currentPlayer.health -= damage;
                         Console.WriteLine($"The {n} strikes you with a mighty blow, and you lose {damage} health.");
                     }
                     else
@@ -170,7 +172,7 @@ namespace DungeonGame1
                     //Death code
                     Console.WriteLine($"As the {n} stands over you, he utters these words: \"Get good, scrub!\". You have been defeated by the mighty {n}");
                     Console.ReadKey();
-                    System.Environment.Exit(0);
+                    Environment.Exit(0);
                 }
                 Console.ReadKey();
             }
@@ -185,7 +187,7 @@ namespace DungeonGame1
             int rando = rand.Next(0, 5);
 
             string[] foes = new string[] { "Pirate", "Saibaman", "Zealot", "Temperamental Elf", "Human Rogue" };
-            
+
             return foes[rando];
         }
     }

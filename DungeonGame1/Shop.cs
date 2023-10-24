@@ -47,7 +47,9 @@ namespace DungeonGame1
                 Console.WriteLine(@$"(P)otion:          ${potionPrice}     ");
                 Console.WriteLine(@$"(D)ifficulty Mod:  ${difficultyPrice}     ");
                 Console.WriteLine("==========================");
+                Console.WriteLine(@"          (S)ave         ");
                 Console.WriteLine(@"          (E)xit         ");
+                Console.WriteLine(@"      (Q)uit the game    ");
 
                 Console.WriteLine();
                 Console.WriteLine();
@@ -71,6 +73,10 @@ namespace DungeonGame1
                     TryBuy("potion", potionPrice, p);
                 else if (input == "d" || input == "difficulty mod")
                     TryBuy("difficulty", difficultyPrice, p);
+                else if (input == "s" || input == "save")
+                    Program.Save();
+                else if (input == "q" || input == "quit")
+                    Program.Quit();
                 else if (input == "e" || input == "exit")
                     break;
 

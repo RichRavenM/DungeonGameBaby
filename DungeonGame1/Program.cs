@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Media;
 
 namespace DungeonGame1
 {
@@ -188,6 +189,19 @@ namespace DungeonGame1
 
         public static void Print(string text, int speed = 40)
         {
+            SoundPlayer soundplayer = new SoundPlayer($"sounds{Path.DirectorySeparatorChar}typewriter-1.wav");
+            soundplayer.PlayLooping();
+            foreach (char c in text)
+            {
+                Console.Write(c);
+                Thread.Sleep(speed);
+            }
+            soundplayer.Stop();
+            Console.WriteLine();
+        }
+
+        public static void PrintForEncounter(string text, int speed = 40)
+        {            
             foreach (char c in text)
             {
                 Console.Write(c);

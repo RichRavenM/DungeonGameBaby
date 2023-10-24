@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,8 @@ namespace DungeonGame1
 
         public static void RunShop(Player p)
         {
+            SoundPlayer soundplayer = new SoundPlayer($"sounds{Path.DirectorySeparatorChar}shop.wav");
+            soundplayer.PlayLooping();
             Console.WriteLine("Welcome to Graham's Wonder Emporium! How may I assist you today?");
 
             int potionPrice;
@@ -78,7 +81,11 @@ namespace DungeonGame1
                 else if (input == "q" || input == "quit")
                     Program.Quit();
                 else if (input == "e" || input == "exit")
-                    break;
+                {
+                    soundplayer.Stop();
+                    Encounters.RandomEncounter();
+
+                }
 
             }
         }

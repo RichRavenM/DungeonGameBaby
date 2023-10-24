@@ -21,6 +21,9 @@ namespace DungeonGame1
 
         public int mods = 0;
 
+        public enum PlayerClass {Ninja, Berserker, Druid};
+        public PlayerClass currentClass = PlayerClass.Berserker;
+
         public int GetHealth()
         {
             int upper = (2 * mods + 5);

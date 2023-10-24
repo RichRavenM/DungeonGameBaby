@@ -35,7 +35,7 @@ namespace DungeonGame1
         {
             Console.Clear();
             Program.Print("Suddenly, you see a long man with a pearlescent white beard, citing his incantations.");
-            Combat(false, "Evil Jeff", 4, 2);
+            Combat(false, "Dark Wizard Jeff", 4, 2);
         }
 
         //Encounter tools
@@ -76,7 +76,7 @@ namespace DungeonGame1
 
             while (h > 0)
             {
-                
+
                 Console.Clear();
                 Console.WriteLine(n);
                 Console.WriteLine($"{p}/{h}");
@@ -96,7 +96,7 @@ namespace DungeonGame1
                     {
                         damage = 0;
                     }
-                    int attack = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4);
+                    int attack = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4) + (Program.currentPlayer.currentClass == Player.PlayerClass.Berserker ? rand.Next(1, 4) : 0);
                     Program.currentPlayer.health -= damage;
                     h -= attack;
 
@@ -121,7 +121,8 @@ namespace DungeonGame1
                 }
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
-                    if (rand.Next(0, 2) == 0)
+                    //Run
+                    if (Program.currentPlayer.currentClass != Player.PlayerClass.Ninja && rand.Next(0, 2) == 0)
                     {
                         Program.PrintForEncounter($"As you sprint away from the {n}, it strike catches you in the back, sending you sprawling onto the ground.");
                         int damage = p - Program.currentPlayer.armourValue;
@@ -158,7 +159,7 @@ namespace DungeonGame1
                     else
                     {
                         Program.PrintForEncounter($"You reach into your bag and pull out a bright-coloured vial. You take a long drink.");
-                        int potionValue = 5;
+                        int potionValue = 5 + (Program.currentPlayer.currentClass == Player.PlayerClass.Druid ? 3 : 0);
                         Program.PrintForEncounter($"You gain {potionValue} health.");
                         Program.currentPlayer.health += potionValue;
                         Program.currentPlayer.potion--;

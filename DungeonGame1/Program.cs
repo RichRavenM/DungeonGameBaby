@@ -50,9 +50,33 @@ namespace DungeonGame1
                 {
                     break;
                 }
-                p.id = i;
+            }
+            Console.WriteLine("Choose your class: Ninja -- Berserker -- Druid");
+            bool isValid = false;
+            while (!isValid)
+            {
+                isValid = true;
+                string input = Console.ReadLine().ToLower();
+
+                switch (input)
+                {
+                    case "ninja":
+                        p.currentClass = Player.PlayerClass.Ninja;
+                        break;
+                    case "berserker":
+                        p.currentClass = Player.PlayerClass.Berserker;
+                        break;
+                    case "druid":
+                        p.currentClass = Player.PlayerClass.Druid;
+                        break;
+                    default:
+                        Console.WriteLine("Please choose and existing class");
+                        isValid = false;
+                        break;
+                }
 
             }
+            p.id = i;
 
             Console.Clear();
             Print($"You awake in a cold, stone, dark room. You feel dazed and are having trouble remembering\nanything about your past.");
@@ -201,7 +225,7 @@ namespace DungeonGame1
         }
 
         public static void PrintForEncounter(string text, int speed = 40)
-        {            
+        {
             foreach (char c in text)
             {
                 Console.Write(c);

@@ -60,10 +60,10 @@ namespace DungeonGame1
 
             for (int i = 1; i < level; i++)
             {
-                total += floor(i + 300 * pow(2, i / 7.0));
+                total += Math.Floor(i + 300 * Math.Pow(2, i / 7.0));
             }
 
-            return floor(total / 4);
+            return (int)Math.Floor(total / 4);
         }
 
         public bool CanLevelUp()
@@ -80,12 +80,14 @@ namespace DungeonGame1
 
         public void LevelUp()
         {
-            while(CanLevelUp())
+            while (CanLevelUp())
             {
-                level++; 
+                level++;
             }
             Console.ForegroundColor = ConsoleColor.Cyan;
             Program.PrintForLevelUp($"Congrats, you are now level {level}!");
             Console.ResetColor();
         }
     }
+}
+

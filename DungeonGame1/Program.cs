@@ -211,7 +211,7 @@ namespace DungeonGame1
             }
         }
 
-        public static void Print(string text, int speed = 40)
+        public static void Print(string text, int speed = 0)
         {
             SoundPlayer soundplayer = new SoundPlayer($"sounds{Path.DirectorySeparatorChar}typewriter-1.wav");
             soundplayer.PlayLooping();
@@ -224,7 +224,7 @@ namespace DungeonGame1
             Console.WriteLine();
         }
 
-        public static void PrintForEncounter(string text, int speed = 40)
+        public static void PrintForEncounter(string text, int speed = 0)
         {
             foreach (char c in text)
             {
@@ -233,8 +233,8 @@ namespace DungeonGame1
             }
             Console.WriteLine();
         }
-        
-        public static void PrintForLevelUp(string text, int speed = 40)
+
+        public static void PrintForLevelUp(string text, int speed = 0)
         {
             SoundPlayer soundplayer = new SoundPlayer($"sounds{Path.DirectorySeparatorChar}level-up.wav");
             soundplayer.PlayLooping();
@@ -245,6 +245,19 @@ namespace DungeonGame1
             }
             soundplayer.Stop();
             Console.WriteLine();
+        }
+
+        public static void ProgressBar(string fillerChar, string backgroundChar, decimal value, int size)
+        {
+            int diff = (int)(value * size);
+
+            for (int i = 0; i < size; i++)
+            {
+                if (i < diff)
+                    Console.Write(fillerChar);
+                else
+                    Console.Write(backgroundChar);
+            }
         }
     }
 }

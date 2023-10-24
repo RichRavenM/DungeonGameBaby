@@ -64,6 +64,13 @@ namespace DungeonGame1
                 Console.WriteLine(@$"Armour Value:      {p.armourValue}     ");
                 Console.WriteLine(@$"Potions:           {p.potion}     ");
                 Console.WriteLine(@$"Difficulty Mod:    {p.mods}     ");
+                Console.WriteLine($@"Level:             {p.level}     ");
+                Console.WriteLine($@"Total XP:          {p.xp}     ");
+                Console.WriteLine($@"XP for next level: {p.GetLevelUpValue()}     ");
+                Console.Write("XP Progress Bar: [");
+                Program.ProgressBar("*", ".", ((decimal)p.xp / (decimal)p.GetLevelUpValue()),25);
+                Console.Write("]");
+                Console.WriteLine();
                 Console.WriteLine("==========================");
 
                 string input = Console.ReadLine().ToLower();

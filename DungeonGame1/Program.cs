@@ -19,6 +19,9 @@ namespace DungeonGame1
             {
                 Directory.CreateDirectory("saves");
             }
+            Console.WriteLine("Press any key to start");
+            Console.ReadKey();
+            Console.Clear();
             currentPlayer = Load(out bool newP);
             if (newP)
             {
@@ -51,15 +54,15 @@ namespace DungeonGame1
             }
 
             Console.Clear();
-            Console.WriteLine($"You awake in a cold, stone, dark room. You feel dazed and are having trouble remembering\nanything about your past.");
+            Print($"You awake in a cold, stone, dark room. You feel dazed and are having trouble remembering\nanything about your past.");
 
 
 
-            Console.WriteLine($"You know your name is {p.name}");
+            Print($"You know your name is {p.name}");
 
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine("You stumble around in the darkness until you find a door handle. You feel some resistance as\nyou turn the door handle, but the rust lock breaks with little effort. You see your captor\nstanding with his back to you outside the door.");
+            Print("You stumble around in the darkness until you find a door handle. You feel some resistance as\nyou turn the door handle, but the rust lock breaks with little effort. You see your captor\nstanding with his back to you outside the door.");
 
             return p;
         }
@@ -181,6 +184,16 @@ namespace DungeonGame1
 
                 }
             }
+        }
+
+        public static void Print(string text, int speed = 40)
+        {
+            foreach (char c in text)
+            {
+                Console.Write(c);
+                Thread.Sleep(speed);
+            }
+            Console.WriteLine();
         }
     }
 }

@@ -15,8 +15,8 @@ namespace DungeonGame1
         //Encounter
         public static void FirstEncounter()
         {
-            Console.WriteLine("You throw open the door and grab a rusty metal sword while charging towards your captor.");
-            Console.WriteLine("He turns...");
+            Program.Print("You throw open the door and grab a rusty metal sword while charging towards your captor.");
+            Program.Print("He turns...");
             Console.ReadKey();
             Combat(false, "Human Rogue", 2, 4);
 
@@ -25,7 +25,7 @@ namespace DungeonGame1
         public static void BasicFightEncounter()
         {
             Console.Clear();
-            Console.WriteLine("You turn the corner and there you see a foe...");
+            Program.Print("You turn the corner and there you see a foe...");
             Console.ReadKey();
             Combat(true, "", 0, 0);
         }
@@ -33,7 +33,7 @@ namespace DungeonGame1
         public static void WizardEncounter()
         {
             Console.Clear();
-            Console.WriteLine("Suddenly, you see a long man with a pearlescent white beard, citing his incantations.");
+            Program.Print("Suddenly, you see a long man with a pearlescent white beard, citing his incantations.");
             Combat(false, "Evil Jeff", 4, 2);
         }
 
@@ -86,7 +86,7 @@ namespace DungeonGame1
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
                     //Attack
-                    Console.WriteLine($"You surge towards your attacker, ready to strike! As you lunge, the {n} strikes you!");
+                    Program.Print($"You surge towards your attacker, ready to strike! As you lunge, the {n} strikes you!");
                     int damage = p - Program.currentPlayer.armourValue;
                     if (damage < 0)
                     {
@@ -96,14 +96,14 @@ namespace DungeonGame1
                     Program.currentPlayer.health -= damage;
                     h -= attack;
 
-                    Console.WriteLine($"You lose {damage} health and deal {attack} damage.");
+                    Program.Print($"You lose {damage} health and deal {attack} damage.");
 
 
                 }
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
                 {
                     //Defend
-                    Console.WriteLine($"As the {n} prepares to strike, you ready your sword in a defensive stance.");
+                    Program.Print($"As the {n} prepares to strike, you ready your sword in a defensive stance.");
                     int damage = (p / 4) - Program.currentPlayer.armourValue;
                     if (damage < 0)
                     {
@@ -113,25 +113,25 @@ namespace DungeonGame1
                     Program.currentPlayer.health -= damage;
                     h -= attack;
 
-                    Console.WriteLine($"You lose {damage} health and deal {attack} damage.");
+                    Program.Print($"You lose {damage} health and deal {attack} damage.");
                 }
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
                     if (rand.Next(0, 2) == 0)
                     {
-                        Console.WriteLine($"As you sprint away from the {n}, it strike catches you in the back, sending you sprawling onto the ground.");
+                        Program.Print($"As you sprint away from the {n}, it strike catches you in the back, sending you sprawling onto the ground.");
                         int damage = p - Program.currentPlayer.armourValue;
                         if (damage < 0)
                         {
                             damage = 0;
                         }
                         Program.currentPlayer.health -= damage;
-                        Console.WriteLine($"You lose {damage} health and are unable to escape.");
+                        Program.Print($"You lose {damage} health and are unable to escape.");
                         Console.ReadKey();
                     }
                     else
                     {
-                        Console.WriteLine($"You use your ninja prowess to evade the {n}, and you successfully escape.");
+                        Program.Print($"You use your ninja prowess to evade the {n}, and you successfully escape.");
                         Console.ReadKey();
                         Shop.LoadShop(Program.currentPlayer);
                     }
@@ -141,43 +141,43 @@ namespace DungeonGame1
                     //Heal
                     if (Program.currentPlayer.potion == 0)
                     {
-                        Console.WriteLine("As you desperately grasp for a potion in your bag, all that you feel are empty vials.");
+                        Program.Print("As you desperately grasp for a potion in your bag, all that you feel are empty vials.");
                         int damage = p - Program.currentPlayer.armourValue;
                         if (damage < 0)
                         {
                             damage = 0;
                         }
                         Program.currentPlayer.health -= damage;
-                        Console.WriteLine($"The {n} strikes you with a mighty blow, and you lose {damage} health.");
+                        Program.Print($"The {n} strikes you with a mighty blow, and you lose {damage} health.");
                     }
                     else
                     {
-                        Console.WriteLine($"You reach into your bag and pull out a bright-coloured vial. You take a long drink.");
+                        Program.Print($"You reach into your bag and pull out a bright-coloured vial. You take a long drink.");
                         int potionValue = 5;
-                        Console.WriteLine($"You gain {potionValue} health.");
+                        Program.Print($"You gain {potionValue} health.");
                         Program.currentPlayer.health += potionValue;
                         Program.currentPlayer.potion--;
-                        Console.WriteLine($"As you were healing, the {n} advanced and struck!");
+                        Program.Print($"As you were healing, the {n} advanced and struck!");
                         int damage = (p / 2) - Program.currentPlayer.armourValue;
                         if (damage < 0)
                         {
                             damage = 0;
                         }
-                        Console.WriteLine($"You lose {damage} health.");
+                        Program.Print($"You lose {damage} health.");
                     }
                     Console.ReadKey();
                 }
                 if (Program.currentPlayer.health <= 0)
                 {
                     //Death code
-                    Console.WriteLine($"As the {n} stands over you, he utters these words: \"Get good, scrub!\". You have been defeated by the mighty {n}");
+                    Program.Print($"As the {n} stands over you, he utters these words: \"Get good, scrub!\". You have been defeated by the mighty {n}");
                     Console.ReadKey();
                     Environment.Exit(0);
                 }
                 Console.ReadKey();
             }
             int c = Program.currentPlayer.GetCoins();
-            Console.WriteLine($"As you stand over the body of the {n}, its body dissolves into {c} gold coins!");
+            Program.Print($"As you stand over the body of the {n}, its body dissolves into {c} gold coins!");
             Program.currentPlayer.coins += c;
             Console.ReadKey();
         }

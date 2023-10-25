@@ -34,8 +34,15 @@ namespace DungeonGame1
         public static void WizardEncounter()
         {
             Console.Clear();
-            Program.Print("Suddenly, you see a long man with a pearlescent white beard, citing his incantations.");
-            Combat(false, "Dark Wizard Jeff", 4, 2);
+            Program.Print("Suddenly, you see a long man with a pearlescent white beard, reading his evil tome.");
+            if (IsChristmas())
+            {
+                Combat(false, "Scary Sorcerer Santa", 3, 5);
+            }
+            else
+            {
+                Combat(false, "Dark Wizard Jeff", 4, 2);
+            }
         }
 
         public static void PuzzleEncounter()
@@ -61,12 +68,14 @@ namespace DungeonGame1
                 Console.Write("\n");
             }
             Program.Print("Choose your path... (Type the position of the rune you want to stand on [left to right] not the number)");
+            Program.Print("Alternatively, press E to turn around and return to the shop...");
 
             for (int i = 0; i < 4; i++)
             {
                 while (true)
                 {
-                    if (int.TryParse(Console.ReadLine(), out int input) && input < 5 && input > 0)
+                    string form = Console.ReadLine();
+                    if (int.TryParse(form, out int input) && input < 5 && input > 0)
                     {
                         if (positions[i] == input - 1)
                         {
@@ -87,6 +96,7 @@ namespace DungeonGame1
                             }
                             Console.ReadKey();
                             Program.Print("Choose your path... (Type the position of the rune you want to stand on [left to right] not the number)");
+                            Program.Print("Alternatively, press E to turn around and return to the shop...");
                             if (Program.currentPlayer.health <= 0)
                             {
                                 //Death code
@@ -99,7 +109,14 @@ namespace DungeonGame1
                     }
                     else
                     {
-                        Program.Print("Invalid input: Please input 1, 2, 3, or 4.");
+                        if (form.ToLower() == "r")
+                        {
+                            Shop.LoadShop(Program.currentPlayer);
+                        }
+                        else
+                        {
+                            Program.Print("Invalid input: Please input 1, 2, 3, or 4.");
+                        }
                     }
                 }
                 Program.Print("You have successfully navigated the puzzle. Congratulations.");
@@ -243,6 +260,10 @@ namespace DungeonGame1
                         int potionValue = 5 + (Program.currentPlayer.currentClass == Player.PlayerClass.Druid ? 3 : 0);
                         Program.PrintForEncounter($"You gain {potionValue} health.");
                         Program.currentPlayer.health += potionValue;
+                        if (Program.currentPlayer.health > Program.currentPlayer.GetMaxHealth())
+                        {
+                            Program.currentPlayer.health = Program.currentPlayer.GetMaxHealth();
+                        }
                         Program.currentPlayer.potion--;
                         Program.PrintForEncounter($"As you were healing, the {n} advanced and struck!");
                         int damage = (p / 2) - Program.currentPlayer.armourValue;
@@ -279,11 +300,31 @@ namespace DungeonGame1
 
         public static string GetName()
         {
+
             int rando = rand.Next(0, 5);
 
-            string[] foes = new string[] { "Pirate", "Saibaman", "Zealot", "Temperamental Elf", "Human Rogue" };
+            string[] foes;
 
+            if (IsChristmas())
+            {
+                foes = new string[] { "Reindeer", "Evil Elf", "Snowmanhunter", "Corrupted Sleigh", "Mischievious Yeti" };
+            }
+            else
+            {
+
+                foes = new string[] { "Pirate", "Saibaman", "Zealot", "Temperamental Elf", "Human Rogue" };
+            }
             return foes[rando];
+        }
+
+        public static bool IsChristmas()
+        {
+            DateTime time = DateTime.Now;
+            if (time.Month == 12)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

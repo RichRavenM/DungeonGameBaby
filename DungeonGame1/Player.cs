@@ -26,6 +26,12 @@ namespace DungeonGame1
         public enum PlayerClass { Ninja, Berserker, Druid };
         public PlayerClass currentClass = PlayerClass.Berserker;
 
+
+        public int GetMaxHealth()
+        {
+            return 10 * level;
+        }
+
         public int GetHealth()
         {
             int upper = (2 * mods + 5);

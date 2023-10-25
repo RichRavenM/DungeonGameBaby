@@ -190,16 +190,15 @@ namespace DungeonGame1
                     {
                         foreach (Player p in players)
                         {
-                            if (p.name == data[0])
+                            if (p.name.ToLower() == data[0].ToLower())
                             {
+                                Console.WriteLine("File loaded succesfully.");
+                                Console.ReadKey();
                                 return p;
                             }
-                            else
-                            {
-                                Console.WriteLine("There is no player with that name!");
-                                Console.ReadKey();
-                            }
                         }
+                        Console.WriteLine("There is no player with that name. Press any key to continue.");
+                        Console.ReadKey();
                     }
                 }
                 catch (IndexOutOfRangeException)

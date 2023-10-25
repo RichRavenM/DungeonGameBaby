@@ -38,17 +38,99 @@ namespace DungeonGame1
             Combat(false, "Dark Wizard Jeff", 4, 2);
         }
 
+        public static void PuzzleEncounter()
+        {
+            Console.Clear();
+            Program.Print("You make your way down the hall. You see a floor covered in runes.");
+            List<char> chars = new List<char> { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            List<int> positions = new List<int>();
+            char c = chars[Program.rand.Next(0, 10)];
+            chars.Remove(c);
+
+            for (int y = 0; y < 4; y++)
+            {
+                int position = Program.rand.Next(0, 4);
+                positions.Add(position);
+                for (int x = 0; x < 4; x++)
+                {
+                    if (x == position)
+                        Console.Write(c);
+                    else
+                        Console.Write(chars[Program.rand.Next(0, 8)]);
+                }
+                Console.Write("\n");
+            }
+            Program.Print("Choose your path... (Type the position of the rune you want to stand on [left to right] not the number)");
+
+            for (int i = 0; i < 4; i++)
+            {
+                while (true)
+                {
+                    if (int.TryParse(Console.ReadLine(), out int input) && input < 5 && input > 0)
+                    {
+                        if (positions[i] == input - 1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if (Program.currentPlayer.currentClass == Player.PlayerClass.Ninja)
+                            {
+                                int damage = Program.rand.Next(0, 2);
+                                Program.Print($"Spikes emerge from the ground you stand on. Your ninja skills help avoid the worst of it. You take {damage} damage!!");
+                                Program.currentPlayer.health -= damage;
+                            }
+                            else
+                            {
+                                Program.Print("Spikes emerge from the ground you stand on. You take 2 damage!!");
+                                Program.currentPlayer.health -= 2;
+                            }
+                            Console.ReadKey();
+                            Program.Print("Choose your path... (Type the position of the rune you want to stand on [left to right] not the number)");
+                            if (Program.currentPlayer.health <= 0)
+                            {
+                                //Death code
+                                //soundplayer.Stop();
+                                Program.Print($"You have been bleeding heavily. It's too much. You take your final breath, and you wait for the heavens to take you away...");
+                                Console.ReadKey();
+                                Environment.Exit(0);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Program.Print("Invalid input: Please input 1, 2, 3, or 4.");
+                    }
+                }
+                Program.Print("You have successfully navigated the puzzle. Congratulations.");
+                int r = Program.currentPlayer.GetCoins();
+                int x = Program.currentPlayer.GetXp();
+                Program.Print($"At the other side of the puzzle you see a basket with some treasure.\nYou have gained {r} gold coins!\nYou have gained {x} XP!");
+                Program.currentPlayer.coins += c;
+                Program.currentPlayer.xp += x;
+                if (Program.currentPlayer.CanLevelUp())
+                {
+                    Program.currentPlayer.LevelUp();
+                }
+                Console.ReadKey();
+                Shop.LoadShop(Program.currentPlayer);
+            }
+        }
+
         //Encounter tools
 
         public static void RandomEncounter()
         {
-            switch (rand.Next(0, 2))
+            switch (rand.Next(0, 3))
             {
                 case 0:
                     BasicFightEncounter();
                     break;
                 case 1:
                     WizardEncounter();
+                    break;
+                case 2:
+                    PuzzleEncounter();
                     break;
             }
         }
@@ -132,7 +214,6 @@ namespace DungeonGame1
                         }
                         Program.currentPlayer.health -= damage;
                         Program.PrintForEncounter($"You lose {damage} health and are unable to escape.");
-                        Console.ReadKey();
                     }
                     else
                     {
@@ -171,7 +252,6 @@ namespace DungeonGame1
                         }
                         Program.PrintForEncounter($"You lose {damage} health.");
                     }
-                    Console.ReadKey();
                 }
                 if (Program.currentPlayer.health <= 0)
                 {

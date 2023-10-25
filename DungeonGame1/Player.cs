@@ -84,6 +84,7 @@ namespace DungeonGame1
             {
                 level++;
             }
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Program.PrintForLevelUp($"Congrats, you are now level {level}!");
             Console.ResetColor();
